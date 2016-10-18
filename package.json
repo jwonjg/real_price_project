@@ -61,6 +61,7 @@
   "devDependencies": {
     "babel-plugin-rewire": "1.0.0-rc-3",
     "babel-register": "^6.8.0",
+    "browser-sync": "^2.17.3",
     "chai": "^3.5.0",
     "enzyme": "^2.3.0",
     "fetch-mock": "3.0.2",
@@ -73,5 +74,19 @@
   },
   "engines": {
     "node": "6.1.0"
-  }
+  },
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwonjg/real_price_project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jwonjg/real_price_project/issues"
+  },
+  "homepage": "https://github.com/jwonjg/real_price_project#readme"
 }

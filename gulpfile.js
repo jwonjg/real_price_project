@@ -10,7 +10,9 @@ var buffer = require('vinyl-buffer');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
+var browserSync = require('browser-sync');
 
+const sync = browserSync.create();
 
 gulp.task('react', function() {
   return browserify({ entries: 'app/main.js', debug: true })
