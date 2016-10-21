@@ -22,10 +22,10 @@ require('babel-core/register');
 require('babel-polyfill');
 
 // MongoDB DB 객체 생성
-var db = require('./models/db');
+var db = require('./model/db');
 
 // Models
-var User = require('./models/User');
+var User = require('./model/schemas/User');
 
 // Controllers
 var userController = require('./controllers/user');

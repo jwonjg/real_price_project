@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken');
 var moment = require('moment');
 var request = require('request');
 var qs = require('querystring');
-var User = require('../models/User');
+var User = require('../model/schemas/User');
 
 function generateToken(user) {
   var payload = {
@@ -161,7 +161,7 @@ exports.unlink = function(req, res, next) {
         break;
       case 'github':
           user.github = undefined;
-        break;      
+        break;
       default:
         return res.status(400).send({ msg: 'Invalid OAuth Provider' });
     }
