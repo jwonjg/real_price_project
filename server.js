@@ -10,7 +10,6 @@ var React = require('react');
 var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
 var Provider = require('react-redux').Provider;
-var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var moment = require('moment');
 var request = require('request');
@@ -21,6 +20,9 @@ dotenv.load();
 // ES6 Transpiler
 require('babel-core/register');
 require('babel-polyfill');
+
+// MongoDB DB 객체 생성
+var db = require('./models/db');
 
 // Models
 var User = require('./models/User');
@@ -35,12 +37,9 @@ var configureStore = require('./app/store/configureStore').default;
 
 var app = express();
 
+// Connect to MongoDB
+db.connect();
 
-mongoose.connect(process.env.MONGODB);
-mongoose.connection.on('error', function() {
-  console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
-  process.exit(1);
-});
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.set('port', process.env.PORT || 3000);
