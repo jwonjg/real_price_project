@@ -8,6 +8,7 @@ lib-cov
 *.gz
 *.swp
 
+
 pids
 logs
 results
@@ -28,3 +29,8 @@ bower_components
 # OS metadata
 .DS_Store
 Thumbs.db
+
+
+#
+./public/js/bundle.js
+./public/js/bundle.js.map
