@@ -2,14 +2,31 @@ import React from 'react';
 import { IndexLink, Link } from 'react-router';
 import { connect } from 'react-redux'
 import { logout } from '../actions/auth';
+import Login from './Account/Login';
 
 class Header extends React.Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      isLoginOpen : false
+    };
+  }
+
   handleLogout(event) {
     event.preventDefault();
     this.props.dispatch(logout());
   }
 
+  openLogin(event) {
+    event.preventDefault();
+    console.log(this.state.isLoginOpen);
+    this.setState({isLoginOpen : !this.state.isLoginOpen});
+  }
+
   render() {
+  console.log(this.state.isLoginOpen);
     const active = { borderBottomColor: '#3f51b5' };
     const rightNav = this.props.token ? (
       <ul className="nav navbar-nav navbar-right">
@@ -28,12 +45,16 @@ class Header extends React.Component {
       </ul>
     ) : (
       <ul className="nav navbar-nav navbar-right">
-        <li><Link to="/login" activeStyle={active}>Log in</Link></li>
+        <li><a href="#" onClick={this.openLogin.bind(this)}>Log in</a></li>
         <li><Link to="/signup" activeStyle={active}>Sign up</Link></li>
       </ul>
     );
+    const loginPopup = this.state.isLoginOpen ? (
+      <Login></Login>
+    ) : null;
     return (
       <nav className="navbar navbar-default navbar-static-top">
+        {loginPopup}
         <div className="container">
           <div className="navbar-header">
             <button type="button" data-toggle="collapse" data-target="#navbar" className="navbar-toggle collapsed">

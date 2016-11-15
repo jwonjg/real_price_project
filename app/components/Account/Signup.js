@@ -67,12 +67,12 @@ class Signup extends React.Component {
             </form>
             <div className="hr-title"><span>or</span></div>
             <div className="btn-toolbar text-center">
+              <p className="text-center">
+                Already have an account? <Link to="/login"><strong>Log in</strong></Link>
+              </p>
             </div>
           </div>
         </div>
-        <p className="text-center">
-          Already have an account? <Link to="/login"><strong>Log in</strong></Link>
-        </p>
       </div>
     );
   }
