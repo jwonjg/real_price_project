@@ -2,6 +2,7 @@ import React from 'react';
 import { IndexLink, Link } from 'react-router';
 import { connect } from 'react-redux'
 import { logout } from '../actions/auth';
+import Constant from '../common/Constant';
 
 class Header extends React.Component {
 
@@ -38,8 +39,8 @@ class Header extends React.Component {
       </ul>
     ) : (
       <ul className="nav navbar-nav navbar-right">
-        <li><a href="#" data-toggle="modal" data-target={"#".concat(this.props.loginPopupId)}>Log in</a></li>
-        <li><a href="#" data-toggle="modal" data-target={"#".concat(this.props.signupPopupId)}>Sign up</a></li>
+        <li><a href="#" data-toggle="modal" data-target={"#".concat(Constant.loginPopupId)}>Log in</a></li>
+        <li><a href="#" data-toggle="modal" data-target={"#".concat(Constant.signupPopupId)}>Sign up</a></li>
       </ul>
     );
     return (

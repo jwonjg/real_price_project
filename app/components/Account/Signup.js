@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { signup } from '../../actions/auth';
 import { facebookLogin, twitterLogin, googleLogin, vkLogin, githubLogin } from '../../actions/oauth';
 import Messages from '../Messages';
+import Constant from '../../common/Constant';
 
 class Signup extends React.Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <div className="modal fade" id={this.props.signupPopupId} role="dialog">
+      <div className="modal fade" id={Constant.signupPopupId} role="dialog">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">

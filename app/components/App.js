@@ -6,14 +6,11 @@ import Signup from './Account/Signup';
 
 class App extends React.Component {
   render() {
-    const loginPopupId = "loginPopup";
-    const signupPopupId = "signupPopup";
-    
     return (
       <div>
-        <Login loginPopupId={loginPopupId}></Login>
-        <Signup signupPopupId={signupPopupId}></Signup>
-        <Header loginPopupId={loginPopupId} signupPopupId={signupPopupId}/>
+        <Login/>
+        <Signup/>
+        <Header/>
         {this.props.children}
         <Footer/>
       </div>
