@@ -1,5 +1,6 @@
 module.exports = {
   loginPopupId : "loginPopup",
   signupPopupId : "signupPopup",
-  movieDetailPopupId : "movieDetailPopup"
+  movieDetailPopupId : "movieDetailPopup",
+  inputPricePopupId : "inputPricePopup"
 }

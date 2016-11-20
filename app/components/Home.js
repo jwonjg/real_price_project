@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import Messages from './Messages';
+import Constant from '../common/Constant';
 
 class Home extends React.Component {
   render() {
@@ -15,7 +16,7 @@ class Home extends React.Component {
                 <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
                   mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
                   mollis euismod. Donec sed odio dui.</p>
-                <a href="#" role="button" className="btn btn-default">View details</a>
+                <a href="#" role="button" className="btn btn-default" data-toggle="modal" data-target={"#".concat(Constant.movieDetailPopupId)}>View details</a>
               </div>
             </div>
           </div>
