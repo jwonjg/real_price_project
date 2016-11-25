@@ -11,19 +11,21 @@ import FlatButton from 'material-ui/FlatButton';
 export default class MovieDetail2 extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleClose  = this.handleClose.bind(this);
+
     this.state = {
-      open: props.open
+      open: false,
+      modal: false
     };
   }
 
-  handleOpen(event) {
-    event.preventDefault();
-    this.setState({open: true});
+  handleClose() {
+    this.setState({open: false});
   };
 
-  handleClose(event) {
-    event.preventDefault();
-    this.setState({open: false});
+  componentWillReceiveProps(nextProps) {
+    this.setState({open: nextProps.open});
   };
 
   render() {
@@ -31,23 +33,23 @@ export default class MovieDetail2 extends React.Component {
       <FlatButton
         label="Cancel"
         primary={true}
-        onTouchTap={this.handleClose.bind(this)}
+        onTouchTap={this.handleClose}
       />,
       <FlatButton
         label="Submit"
         primary={true}
         keyboardFocused={true}
-        onTouchTap={this.handleClose.bind(this)}
+        onTouchTap={this.handleClose}
       />,
     ];
 
     return (
         <Dialog
-          title="Dialog With Actions"
+          title="Movie Detail Popup"
           actions={actions}
-          modal={false}
+          modal={this.state.modal}
           open={this.state.open}
-          onRequestClose={this.handleClose.bind(this)}
+          onRequestClose={this.handleClose}
         >
           The actions in this window were passed in as an array of React objects.
         </Dialog>

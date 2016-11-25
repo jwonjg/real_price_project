@@ -9,6 +9,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import MovieDetail2 from './Movie/MovieDetail2';
 
 // Needed for onTouchTap
 injectTapEventPlugin();
@@ -18,7 +19,6 @@ class Home extends React.Component {
     super(props);
 
     this.handleOpen  = this.handleOpen.bind(this);
-    this.handleClose   = this.handleClose.bind(this);
 
     this.state = {
       open: false
@@ -29,25 +29,7 @@ class Home extends React.Component {
     this.setState({open: true});
   };
 
-  handleClose() {
-    this.setState({open: false});
-  };
-
   render() {
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={this.handleClose}
-      />,
-    ];
-
     return (
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <div className="container-fluid">
@@ -76,15 +58,7 @@ class Home extends React.Component {
             </div>
           </div>
 
-          <Dialog
-            title="Dialog With Actions"
-            actions={actions}
-            modal={false}
-            open={this.state.open}
-            onRequestClose={this.handleClose}
-          >
-            The actions in this window were passed in as an array of React objects.
-          </Dialog>
+          <MovieDetail2 open={this.state.open} />
 
           <div className="col-sm-4">
             <div className="panel">
