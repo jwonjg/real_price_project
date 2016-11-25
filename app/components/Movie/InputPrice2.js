@@ -1,9 +1,6 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import InputPrice2 from './InputPrice2';
-
 
 /**
  * Dialog with action buttons. The actions are passed in as an array of React objects,
@@ -11,30 +8,24 @@ import InputPrice2 from './InputPrice2';
  *
  * You can also close this dialog by clicking outside the dialog, or with the 'Esc' key.
  */
-export default class MovieDetail2 extends React.Component {
+export default class InputPrice2 extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleClose  = this.handleClose.bind(this);
-    this.handleChildOpen  = this.handleChildOpen.bind(this);
 
     this.state = {
       open: false,
-      modal: false,
-      childOpen: false
+      modal: false
     };
   }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({open: nextProps.open});
-  };
 
   handleClose() {
     this.setState({open: false});
   };
 
-  handleChildOpen() {
-    this.setState({childOpen: true});
+  componentWillReceiveProps(nextProps) {
+    this.setState({open: nextProps.open});
   };
 
   render() {
@@ -54,18 +45,13 @@ export default class MovieDetail2 extends React.Component {
 
     return (
         <Dialog
-          title="Movie Detail Popup"
+          title="Input Price Popup"
           actions={actions}
           modal={this.state.modal}
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
           The actions in this window were passed in as an array of React objects.
-
-          <RaisedButton label="Input Price" onTouchTap={this.handleChildOpen}/>
-
-          <InputPrice2 open={this.state.childOpen} />
-          
         </Dialog>
     );
   }
