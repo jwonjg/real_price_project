@@ -12,7 +12,6 @@ var Router = require('react-router');
 var Provider = require('react-redux').Provider;
 var jwt = require('jsonwebtoken');
 var moment = require('moment');
-var request = require('request');
 
 // Load environment variables from .env file
 dotenv.load();
@@ -30,6 +29,7 @@ var User = require('./model/schemas/User');
 // Controllers
 var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
+var movieController = require('./controllers/movie');
 
 // React and Server-Side Rendering
 var routes = require('./app/routes');
@@ -80,6 +80,9 @@ app.post('/login', userController.loginPost);
 app.post('/forgot', userController.forgotPost);
 app.post('/reset/:token', userController.resetPost);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
+
+app.get('/retrieveBoxoffice/:targetDt', movieController.retrieveNewBoxOfficeDetailGet);
+
 
 // React server rendering
 app.use(function(req, res) {
