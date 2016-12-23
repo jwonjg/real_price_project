@@ -4,12 +4,18 @@ import { connect } from 'react-redux'
 import { login } from '../../actions/auth';
 import { facebookLogin, twitterLogin, googleLogin, vkLogin, githubLogin } from '../../actions/oauth';
 import Messages from '../Messages';
-import Constant from '../../common/Constant';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { email: '', password: '' };
+  constructor() {
+    super();
+
+    this.state = {
+      email: '',
+      password: ''
+    };
   }
 
   handleChange(event) {
@@ -42,15 +48,23 @@ class Login extends React.Component {
   }
 
   render() {
+    const question = "Don't have an account? ";
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        keyboardFocused={false}
+        onTouchTap={this.props.handlePopup}
+      />,
+    ];
     return (
-      <div className="modal fade" id={Constant.loginPopupId} role="dialog">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close" data-dismiss="modal">&times;</button>
-              <h4 className="modal-title">Log In</h4>
-            </div>
-            <div className="modal-body">
+      <Dialog
+        title="Log In"
+        actions={actions}
+        open={this.props.open}
+        onRequestClose={this.props.handlePopup}
+      >
+            <div className="card-content">
               <Messages messages={this.props.messages}/>
               <form onSubmit={this.handleLogin.bind(this)}>
                 <div className="form-group">
@@ -61,22 +75,21 @@ class Login extends React.Component {
                   <label htmlFor="password">Password</label>
                   <input type="password" name="password" id="password" placeholder="Password" className="form-control" value={this.state.password} onChange={this.handleChange.bind(this)}/>
                 </div>
-                <div className="form-group"><Link to="/forgot"><strong>Forgot your password?</strong></Link></div>
-                <button type="submit" className="btn btn-success">Log in</button>
-              </form>
-            <div className="modal-footer">
-              <div className="hr-title"><span>or</span></div>
-                <div className="btn-toolbar text-center">
-                  <p className="text-center">
-                    Don't have an account? <Link to="/signup"><strong>Sign up</strong></Link>
-                  </p>
+                <div className="form-group text-center">
+                  <div className="btn-toolbar text-center">
+                    <Link to="/forgot"><strong>Forgot your password?</strong></Link>
+                    <p className="text-center">
+                    {question}
+                    <Link to="/signup"><strong>Sign up</strong></Link>
+                    </p>
+                  </div>
                 </div>
-                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
+                <div className="form-group text-center">
+                  <RaisedButton primary={true} fullWidth={true} type="submit" label="Log in"/>
+                </div>
+              </form>
             </div>
-          </div>
-        </div>
-      </div>
+      </Dialog>
     );
   }
 }

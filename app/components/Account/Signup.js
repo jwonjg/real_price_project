@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { signup } from '../../actions/auth';
 import { facebookLogin, twitterLogin, googleLogin, vkLogin, githubLogin } from '../../actions/oauth';
 import Messages from '../Messages';
-import Constant from '../../common/Constant';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 class Signup extends React.Component {
   constructor(props) {
@@ -42,14 +43,30 @@ class Signup extends React.Component {
   }
 
   render() {
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        keyboardFocused={false}
+        onTouchTap={this.props.handlePopup}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        keyboardFocused={false}
+        onTouchTap={this.props.handlePopup}
+      />,
+    ];
     return (
-      <div className="modal fade" id={Constant.signupPopupId} role="dialog">
+      <Dialog
+        title="Create an account"
+        actions={actions}
+        modal={false}
+        open={this.props.open}
+        onRequestClose={this.props.handlePopup}
+      >
         <div className="modal-dialog">
           <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close" data-dismiss="modal">&times;</button>
-              <h4 className="modal-title">Create an account</h4>
-            </div>
             <div className="modal-body">
               <Messages messages={this.props.messages}/>
               <form onSubmit={this.handleSignup.bind(this)}>
@@ -82,7 +99,7 @@ class Signup extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+      </Dialog>
     );
   }
 }
