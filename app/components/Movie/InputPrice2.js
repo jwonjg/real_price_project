@@ -15,8 +15,7 @@ export default class InputPrice2 extends React.Component {
     this.handleClose  = this.handleClose.bind(this);
 
     this.state = {
-      open: false,
-      modal: false
+      open: false
     };
   }
 
@@ -33,12 +32,13 @@ export default class InputPrice2 extends React.Component {
       <FlatButton
         label="Cancel"
         primary={true}
+        keyboardFocused={false}
         onTouchTap={this.handleClose}
       />,
       <FlatButton
         label="Submit"
         primary={true}
-        keyboardFocused={true}
+        keyboardFocused={false}
         onTouchTap={this.handleClose}
       />,
     ];
@@ -47,7 +47,7 @@ export default class InputPrice2 extends React.Component {
         <Dialog
           title="Input Price Popup"
           actions={actions}
-          modal={this.state.modal}
+          modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
         >

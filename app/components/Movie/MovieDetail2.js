@@ -12,15 +12,14 @@ import InputPrice2 from './InputPrice2';
  * You can also close this dialog by clicking outside the dialog, or with the 'Esc' key.
  */
 export default class MovieDetail2 extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.handleClose  = this.handleClose.bind(this);
     this.handleChildOpen  = this.handleChildOpen.bind(this);
 
     this.state = {
       open: false,
-      modal: false,
       childOpen: false
     };
   }
@@ -42,12 +41,13 @@ export default class MovieDetail2 extends React.Component {
       <FlatButton
         label="Cancel"
         primary={true}
+        keyboardFocused={false}
         onTouchTap={this.handleClose}
       />,
       <FlatButton
         label="Submit"
         primary={true}
-        keyboardFocused={true}
+        keyboardFocused={false}
         onTouchTap={this.handleClose}
       />,
     ];
@@ -56,7 +56,7 @@ export default class MovieDetail2 extends React.Component {
         <Dialog
           title="Movie Detail Popup"
           actions={actions}
-          modal={this.state.modal}
+          modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
@@ -65,7 +65,7 @@ export default class MovieDetail2 extends React.Component {
           <RaisedButton label="Input Price" onTouchTap={this.handleChildOpen}/>
 
           <InputPrice2 open={this.state.childOpen} />
-          
+
         </Dialog>
     );
   }

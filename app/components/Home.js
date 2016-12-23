@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import Messages from './Messages';
 import Constant from '../common/Constant';
 
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -31,7 +29,6 @@ class Home extends React.Component {
 
   render() {
     return (
-    <MuiThemeProvider muiTheme={getMuiTheme()}>
       <div className="container-fluid">
         <Messages messages={this.props.messages}/>
         <div className="row">
@@ -73,7 +70,6 @@ class Home extends React.Component {
           </div>
         </div>
       </div>
-    </MuiThemeProvider>
     );
   }
 }

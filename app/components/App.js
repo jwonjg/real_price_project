@@ -1,23 +1,23 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import Login from './Account/Login';
-import Signup from './Account/Signup';
 import MovieDetail from './Movie/MovieDetail';
 import InputPrice from './Movie/InputPrice';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends React.Component {
   render() {
     return (
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
       <div>
-        <Login/>
-        <Signup/>
         <Header/>
         <MovieDetail/>
         <InputPrice/>
         {this.props.children}
         <Footer/>
       </div>
+    </MuiThemeProvider>
     );
   }
 }

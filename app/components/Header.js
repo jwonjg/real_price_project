@@ -2,16 +2,20 @@ import React from 'react';
 import { IndexLink, Link } from 'react-router';
 import { connect } from 'react-redux'
 import { logout } from '../actions/auth';
-import Constant from '../common/Constant';
+import Login from './Account/Login';
+import Signup from './Account/Signup';
 
 class Header extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.handleLoginPopup = this.handleLoginPopup.bind(this);
+    this.handleSignupPopup = this.handleSignupPopup.bind(this);
 
     this.state = {
-      isLoginOpen : false,
-      isSignupOpen : false
+      loginOpen : false,
+      signupOpen : false
     };
   }
 
@@ -19,6 +23,14 @@ class Header extends React.Component {
     event.preventDefault();
     this.props.dispatch(logout());
   }
+
+  handleLoginPopup() {
+    this.setState({loginOpen: !this.state.loginOpen});
+  };
+
+  handleSignupPopup() {
+    this.setState({signupOpen: !this.state.signupOpen});
+  };
 
   render() {
     const active = { borderBottomColor: '#3f51b5' };
@@ -39,12 +51,14 @@ class Header extends React.Component {
       </ul>
     ) : (
       <ul className="nav navbar-nav navbar-right">
-        <li><a href="#" data-toggle="modal" data-target={"#".concat(Constant.loginPopupId)}>Log in</a></li>
-        <li><a href="#" data-toggle="modal" data-target={"#".concat(Constant.signupPopupId)}>Sign up</a></li>
+        <li><a href="#" data-toggle="modal" onTouchTap={this.handleLoginPopup}>Log in</a></li>
+        <li><a href="#" data-toggle="modal" onTouchTap={this.handleSignupPopup}>Sign up</a></li>
       </ul>
     );
     return (
       <nav className="navbar navbar-default navbar-static-top">
+        <Login handlePopup={this.handleLoginPopup} open={this.state.loginOpen} />
+        <Signup handlePopup={this.handleSignupPopup} open={this.state.signupOpen} />
         <div className="container">
           <div className="navbar-header">
             <button type="button" data-toggle="collapse" data-target="#navbar" className="navbar-toggle collapsed">
