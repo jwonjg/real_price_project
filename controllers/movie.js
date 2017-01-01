@@ -1,7 +1,64 @@
 var request = require('request');
 var Movie = require('../model/schemas/Movie');
+var Code = require('../model/schemas/Code');
+var Constant = require('../app/common/Constant');
 
 const defaultRealPrice = 10000;
+
+/**
+ * POST /readMovieListPost
+ */
+exports.readMovieListPost = function(req, res) {
+  Movie
+    .find(req.body.query, req.body.fields, req.body.options)
+    .populate("openStateCdInfo")
+    .exec((err, movieList) => {
+      if(err) {
+        console.log(err);
+      } else {
+        res.send(movieList);
+      }
+    });
+  // Movie.find(req.body.query, req.body.fields, req.body.options, function(error, docs) {
+  //   res.send(docs);
+  // });
+}
+
+/**
+ * GET /resetIsOpenGet
+ */
+exports.resetIsOpenGet = function(req, res, next) {
+  new Promise((resolve, reject) => {
+    Movie.find(
+      {openStateCd:{$ne:Constant.codeInfo.openState.codeIdList.closed}},
+      function(err, movieList) {
+        if(!err) {
+          Promise.all(movieList.map((movieInfo) => {
+            return new Promise((resolve, reject) => {
+              Movie.update(
+                {movieCd:movieInfo.movieCd},
+                {$set:{openStateCd:getBoxOfficeOpenState(movieInfo.openDt)}},
+                function(err, numberAffected) {
+                  if(!err) {
+                    resolve();
+                  } else {
+                    reject();
+                  }
+                }
+              );
+            });
+          })).then(() => {
+            resolve();
+          })
+        } else {
+          reject(err);
+        }
+      }
+    );
+  }).then(() => {
+    next();
+  });
+}
 
 /**
  * GET /retrieveBoxoffice
@@ -14,7 +71,7 @@ exports.retrieveNewBoxOfficeDetailGet = function(req, res, next) {
       movies.forEach(saveNewMovieDetailInfo);
     });
   next();
-};
+}
 
 function requireBoxOfficeListInfo(targetDt) {
   return new Promise(function(resolve, reject) {
@@ -39,6 +96,8 @@ function saveNewMovieDetailInfo(boxOfficeMovie) {
           .then(movieDetailInfo => {
             saveMovieInfo(movieDetailInfo);
           })
+      } else {
+        updateOpenState(boxOfficeMovie);
       }
     });
 }
@@ -86,10 +145,11 @@ function createMovie(movieInfo) {
     movieCd: movieInfo.movieCd,
     movieNm: movieInfo.movieNm,
     engMovieNm: movieInfo.eng_title[0].content,
-    openDt: Date(movieInfo.openDt),
+    openDt: Date.parse(movieInfo.openDt),
+    openStateCd: getBoxOfficeOpenState(movieInfo.openDt),
     rating: movieInfo.open_info[1].content,
     runtime: movieInfo.open_info[2].content,
-    thumbnail: movieInfo.thumbnail.content,
+    thumbnail: movieInfo.thumbnail[0].content,
     story: movieInfo.story[0].content,
     nation: movieInfo.nation[0].content,
     category: movieInfo.category[0].content,
@@ -102,4 +162,25 @@ function createMovie(movieInfo) {
     video: movieInfo.video,
     realPrice: defaultRealPrice
   });
+}
+
+function updateOpenState(movieInfo) {
+  Movie.update(
+    {movieCd:movieInfo.movieCd},
+    {$set:{openStateCd:getBoxOfficeOpenState(movieInfo.openDt)}},
+    {multi:true},
+    function(error, numAffected) {
+      if(error) {
+        console.log(error);
+      }
+    }
+  );
+}
+
+function getBoxOfficeOpenState(openDtString) {
+  if(Date.now() < Date.parse(openDtString)) {
+    return Constant.codeInfo.openState.codeIdList.scheduled;
+  } else {
+    return Constant.codeInfo.openState.codeIdList.opening;
+  }
 }

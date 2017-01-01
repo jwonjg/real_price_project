@@ -30,6 +30,7 @@ var User = require('./model/schemas/User');
 var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
 var movieController = require('./controllers/movie');
+var codeController = require('./controllers/code');
 
 // React and Server-Side Rendering
 var routes = require('./app/routes');
@@ -81,8 +82,10 @@ app.post('/forgot', userController.forgotPost);
 app.post('/reset/:token', userController.resetPost);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
 
-app.get('/retrieveBoxoffice/:targetDt', movieController.retrieveNewBoxOfficeDetailGet);
+app.get('/retrieveBoxoffice/:targetDt', movieController.resetIsOpenGet, movieController.retrieveNewBoxOfficeDetailGet);
+app.post('/readMovieList', movieController.readMovieListPost);
 
+app.get('/initCode', userController.ensureAuthenticated, codeController.ensureAdminAccountGet, codeController.initCodeSchemaGet);
 
 // React server rendering
 app.use(function(req, res) {

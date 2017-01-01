@@ -1,13 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import axios from 'axios'
 import Messages from './Messages';
-import Constant from '../common/Constant';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MovieDetail2 from './Movie/MovieDetail2';
+import MovieListItem from './Movie/MovieListItem';
 
 // Needed for onTouchTap
 injectTapEventPlugin();
@@ -16,11 +17,17 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleOpen  = this.handleOpen.bind(this);
-
     this.state = {
-      open: false
+      open: false,
+      movieList: []
     };
+
+    this.handleOpen  = this.handleOpen.bind(this);
+    this._fetchMovieList = this._fetchMovieList.bind(this);
+  }
+
+  componentWillMount() {
+    this._fetchMovieList();
   }
 
   handleOpen() {
@@ -28,10 +35,16 @@ class Home extends React.Component {
   };
 
   render() {
+    const movieList = this._getReadMovieList();
     return (
       <div className="container-fluid">
         <Messages messages={this.props.messages}/>
         <div className="row">
+
+          <div className="movie-list">
+            {movieList}
+          </div>
+
           <div className="col-sm-4">
             <div className="panel">
               <div className="panel-body">
@@ -39,10 +52,11 @@ class Home extends React.Component {
                 <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
                   mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
                   mollis euismod. Donec sed odio dui.</p>
-                <a href="#" role="button" className="btn btn-default" data-toggle="modal" data-target={"#".concat(Constant.movieDetailPopupId)}>View details</a>
+                <a href="#" role="button" className="btn btn-default" onClick={this._fetchMovieList}>View details</a>
               </div>
             </div>
           </div>
+
           <div className="col-sm-4">
             <div className="panel">
               <div className="panel-body">
@@ -64,13 +78,44 @@ class Home extends React.Component {
                 <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
                   mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
                   mollis euismod. Donec sed odio dui.</p>
-                <a href="#" role="button" className="btn btn-default">View details</a>
+                <a href="#" role="button" className="btn btn-default" onClick={this._fetchMovieList}>View details</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  _getReadMovieList() {
+    return this.state.movieList.map((movie) => {
+      console.log(movie);
+      return <MovieListItem
+              {...movie}
+              //  id={comment.id}
+              //  author={comment.author}
+              //  body={comment.body}
+              //  avatarUrl={comment.avatarUrl}
+              // onDelete={this._deleteComment}
+              // onDelete={(commentID) => this._deleteComment(commentID)}
+              //  onDelete={this._deleteComment.bind(this)}
+               key={movie.movieCd} />
+    });
+  }
+
+  _fetchMovieList() {
+    axios.post('http://localhost:3000/readMovieList', {
+      query: {},
+      fields: null,
+      options: { sort: { openDt: -1 } }
+    })
+    .then((response) => {
+      this.setState({ movieList: response.data });
+    })
+    .catch(function (error) {
+      // TODO: error handling
+      console.log(error);
+    });
   }
 }
 
