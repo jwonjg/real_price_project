@@ -104,7 +104,7 @@ class Home extends React.Component {
   }
 
   _fetchMovieList() {
-    axios.post('http://localhost:3000/readMovieList', {
+    axios.post('/readMovieList', {
       query: {},
       fields: null,
       options: { sort: { openDt: -1 } }
