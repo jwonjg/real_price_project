@@ -9,15 +9,15 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 class App extends React.Component {
   render() {
     return (
-    <MuiThemeProvider muiTheme={getMuiTheme()}>
-      <div>
-        <Header/>
-        <MovieDetail/>
-        <InputPrice/>
-        {this.props.children}
-        <Footer/>
-      </div>
-    </MuiThemeProvider>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <div>
+          <Header/>
+          <MovieDetail/>
+          <InputPrice/>
+          {this.props.children}
+          <Footer/>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios'
+import axios from 'axios';
 import Messages from './Messages';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import MovieDetail2 from './Movie/MovieDetail2';
 import MovieListItem from './Movie/MovieListItem';
+import MovieDetail from './Movie/MovieDetail';
 
 // Needed for onTouchTap
 injectTapEventPlugin();
@@ -18,11 +18,9 @@ class Home extends React.Component {
     super(props);
 
     this.state = {
-      open: false,
       movieList: []
     };
 
-    this.handleOpen  = this.handleOpen.bind(this);
     this._fetchMovieList = this._fetchMovieList.bind(this);
   }
 
@@ -30,15 +28,12 @@ class Home extends React.Component {
     this._fetchMovieList();
   }
 
-  handleOpen() {
-    this.setState({open: true});
-  };
-
   render() {
     const movieList = this._getReadMovieList();
     return (
       <div className="container-fluid">
         <Messages messages={this.props.messages}/>
+        <MovieDetail/>
         <div className="row">
 
           <div className="movie-list">
@@ -69,8 +64,6 @@ class Home extends React.Component {
             </div>
           </div>
 
-          <MovieDetail2 open={this.state.open} />
-
           <div className="col-sm-4">
             <div className="panel">
               <div className="panel-body">
@@ -88,18 +81,19 @@ class Home extends React.Component {
   }
 
   _getReadMovieList() {
-    return this.state.movieList.map((movie) => {
-      console.log(movie);
+    return this.state.movieList.map((movieInfo) => {
+      console.log(movieInfo);
       return <MovieListItem
-              {...movie}
-              //  id={comment.id}
-              //  author={comment.author}
-              //  body={comment.body}
-              //  avatarUrl={comment.avatarUrl}
-              // onDelete={this._deleteComment}
-              // onDelete={(commentID) => this._deleteComment(commentID)}
-              //  onDelete={this._deleteComment.bind(this)}
-               key={movie.movieCd} />
+                //{...movie}
+                movieInfo={movieInfo}
+                //  id={comment.id}
+                //  author={comment.author}
+                //  body={comment.body}
+                //  avatarUrl={comment.avatarUrl}
+                // onDelete={this._deleteComment}
+                // onDelete={(commentID) => this._deleteComment(commentID)}
+                //  onDelete={this._deleteComment.bind(this)}
+                key={movieInfo.movieCd} />
     });
   }
 
@@ -122,6 +116,8 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    // isOpenPopup: state.moviePopup.isOpenPopup,
+    // movieInfo: state.moviePopup.movieInfo,
     messages: state.messages
   };
 };
