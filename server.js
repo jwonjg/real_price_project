@@ -31,6 +31,7 @@ var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
 var movieController = require('./controllers/movie');
 var codeController = require('./controllers/code');
+var priceController = require('./controllers/price');
 
 // React and Server-Side Rendering
 var routes = require('./app/routes');
@@ -84,6 +85,8 @@ app.get('/unlink/:provider', userController.ensureAuthenticated, userController.
 
 app.get('/retrieveBoxoffice/:targetDt', movieController.resetIsOpenGet, movieController.retrieveNewBoxOfficeDetailGet);
 app.post('/readMovieList', movieController.readMovieListPost);
+
+app.post('/insertPrice', priceController.insertPricePost);
 
 app.get('/initCode', userController.ensureAuthenticated, codeController.ensureAdminAccountGet, codeController.initCodeSchemaGet);
 

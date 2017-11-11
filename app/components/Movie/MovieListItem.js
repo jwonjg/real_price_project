@@ -26,7 +26,8 @@ class MovieListItem extends React.Component {
           <div className="panel-body" style={divStyle}>
             <h3>{this.props.movieInfo.movieNm}</h3>
             <p>{this.props.movieInfo.story}</p>
-          <RaisedButton label="View details" onTouchTap={this.handleOpen}/>
+            <h3>{this.props.movieInfo.realPrice}</h3>
+            <RaisedButton label="View details" onTouchTap={this.handleOpen}/>
           </div>
         </div>
       </div>

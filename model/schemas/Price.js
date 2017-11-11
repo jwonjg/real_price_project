@@ -10,16 +10,14 @@ var schemaOptions = {
   }
 };
 
-var codeSchema = new mongoose.Schema({
-  codeId: { type: String, unique: true},
-  codeGrpId: String,
-  codeNm: String,
-  codeDesc: String,
-  displayOrder: Number,
+var priceSchema = new mongoose.Schema({
+  movieCd: String,
+  email: String,
+  realPrice: Number,
   createDate: { type: Date, default: Date.now() },
   updateDate: { type: Date, default: Date.now() }
 }, schemaOptions);
 
-var Code = mongoose.model('Code', codeSchema);
+var Price = mongoose.model('Price', priceSchema);
 
-module.exports = Code;
+module.exports = Price;

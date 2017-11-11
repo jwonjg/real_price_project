@@ -4,7 +4,7 @@ const initialInfoState = {
   movieList: []
 };
 
-export function movieInfo(state = initialInfoState, action) {
+export function movieInfo(state = {initialInfoState}, action) {
   // if (!state.hydrated) {
   //   state = Object.assign({}, initialState, state, { hydrated: true });
   // }
